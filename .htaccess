@@ -1,0 +1,30 @@
+errorDocument 400 http://www.youwebsite.com/404.html
+errorDocument 401 http://www.youwebsite.com/error.html
+errorDocument 403 http://www.youwebsite.com/error.html
+errorDocument 500 http://www.youwebsite.com/error.html
+
+# Disable Directory Browsing
+Options All -Indexes
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^youwebsite.com
+RewriteRule (.*) http://www.youwebsite.info/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^subdomain\.youwebsite\.com$
+RewriteCond %{REQUEST_URI} !^/subdomain_folder/
+RewriteRule (.*) /subdomain_folder/$1
+
+RewriteCond %{HTTP_HOST} ^oldwebsite.com
+RewriteRule (.*) http://www.newwebsite.com/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^www\.oldwebsite\.com
+RewriteRule (.*) http://www.newwebsite.com/$1 [R=301,L]
+
+RewriteRule ^([^/.]+)/?$ $1.php
+
+RewriteRule ^select/([a-zA-Z0-9_-]+)$ select.php?id=$1
+RewriteRule ^select/([a-zA-Z0-9_-]+)/$ select.php?id=$1
+
+RewriteRule ^showfiles/([a-zA-Z0-9_-]+)$ showfiles.php?id=$1
+RewriteRule ^showfiles/([a-zA-Z0-9_-]+)/$ showfiles.php?id=$1
+
